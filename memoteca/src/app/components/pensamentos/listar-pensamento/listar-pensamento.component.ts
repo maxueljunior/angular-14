@@ -1,3 +1,5 @@
+import { Pensamento } from '../pensamento';
+import { PensamentoService } from '../pensamento.service';
 import { PensamentoComponent } from './../pensamento/pensamento.component';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,22 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListarPensamentoComponent implements OnInit {
 
-  listaPensamentos: any[] = [
-    {
-      conteudo: 'I <33 Angular',
-      autoria: 'Maxuel Jr.',
-      modelo: 'modelo3'
-    },
-    {
-      conteudo: 'I <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 AngularI <33 Angular',
-      autoria: 'Maxuel Jr.',
-      modelo: 'modelo2'
-    }
-  ];
+  listaPensamentos: Pensamento[] = [];
 
-  constructor() { }
+  constructor(private service: PensamentoService) { }
 
   ngOnInit(): void {
+    this.service.listar().subscribe((listaPensamentos) => {
+      this.listaPensamentos = listaPensamentos;
+    });
   }
-
 }
