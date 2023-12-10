@@ -1,46 +1,53 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subscription, switchMap, map } from 'rxjs';
-import { Item, Livro } from 'src/app/models/interfaces';
+import { Subscription, switchMap, map, filter, debounceTime, tap, distinctUntilChanged, catchError, throwError, of } from 'rxjs';
+import { Item, Livro, LivrosResultado } from 'src/app/models/interfaces';
 import { LivroVolumeInfo } from 'src/app/models/livroVolumeInfo';
 import { LivroService } from 'src/app/service/livro.service';
+
+const PAUSA = 300;
 
 @Component({
   selector: 'app-lista-livros',
   templateUrl: './lista-livros.component.html',
   styleUrls: ['./lista-livros.component.css']
 })
-export class ListaLivrosComponent implements OnDestroy{
-
-  listaLivros: Livro[];
+export class ListaLivrosComponent{
 
   campoBusca = new FormControl();
-  subscription: Subscription;
-  livro: Livro;
+  mensagemDeErro = '';
+  livrosResultado: LivrosResultado;
 
   constructor(private service: LivroService) { }
 
-  ngOnDestroy(): void {
-    console.log('terminamos....');
-    this.subscription.unsubscribe();
-  }
+  // totalDeLivros$ = this.campoBusca.valueChanges
+  //   .pipe(
+  //     debounceTime(PAUSA),
+  //     filter((valorDigitado) => valorDigitado.length >= 3),
+  //     distinctUntilChanged(),
+  //     switchMap((valorDigitado) => this.service.buscar(valorDigitado)),
+  //     map(resultado => this.livrosResultado = resultado),
+  //     catchError((erro) => {
+  //       console.log(erro);
+  //       return of();
+  //     })
+  //   );
 
   livroEncontrados$ = this.campoBusca.valueChanges
     .pipe(
+      debounceTime(PAUSA),
+      filter((valorDigitado) => valorDigitado.length >= 3),
+      distinctUntilChanged(),
       switchMap((valorDigitado) => this.service.buscar(valorDigitado)),
-      map(items => this.listaLivros = this.livrosResultadoParaLivros(items))
+      tap((valores) => console.log(valores)),
+      map(valores => this.livrosResultado = valores),
+      map(resultado => resultado.items ?? []),
+      map(items => this.livrosResultadoParaLivros(items)),
+      catchError((erro) => {
+        console.log(erro);
+        return throwError(() => new Error(this.mensagemDeErro = "Ops... ocorreu um erro, recarregue a pagina!"));
+      })
     )
-
-  // public buscarLivros(){
-  //   this.subscription = this.service.buscar(this.campoBusca.value).subscribe(
-  //     {
-  //       next: (items) => {
-  //         this.listaLivros = this.livrosResultadoParaLivros(items);
-  //       },
-  //       error: erro => console.error(erro),
-  //     }
-  //   );
-  // }
 
   public livrosResultadoParaLivros(items: Item[]): LivroVolumeInfo[]{
     return items.map(item => {
