@@ -67,7 +67,8 @@
               "browserTarget": "buscante:build:production"
             },
             "development": {
-              "browserTarget": "buscante:build:development"
+              "browserTarget": "buscante:build:development",
+              "proxyConfig": "src/proxy.conf.js"
             }
           },
           "defaultConfiguration": "development"
