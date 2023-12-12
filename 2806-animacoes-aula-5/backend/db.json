@@ -23,7 +23,7 @@
     },
     {
       "id": 5,
-      "descricao": "Trocar lâmpada",
+      "descricao": "Trocar lâmpadaa",
       "categoria": "Casa",
       "statusFinalizado": true,
       "prioridade": "Alta"
@@ -54,6 +54,13 @@
       "descricao": "Fazer curso de animações",
       "statusFinalizado": true,
       "categoria": "Estudos",
+      "prioridade": "Alta"
+    },
+    {
+      "id": 12,
+      "descricao": "xxxx",
+      "statusFinalizado": true,
+      "categoria": "Casa",
       "prioridade": "Alta"
     }
   ]

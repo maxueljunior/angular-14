@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { TarefaService } from 'src/app/service/tarefa.service';
 import { Tarefa } from '../interface/tarefa';
 import { checkButtonTrigger, filterTrigger, highlightedStateTrigger, shownStateTrigger, formButtonTrigger, naoHaTarefasTrigger, shakeTrigger} from '../animations';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lista-tarefas',
@@ -29,6 +29,7 @@ export class ListaTarefasComponent implements OnInit {
   id: number = 0;
   campoBusca: string = '';
   tarefasFiltradas: Tarefa[] = [];
+  tarefaSubscription: Subscription = new Subscription();
 
   formulario: FormGroup = this.fomBuilder.group({
     id: [0],
@@ -40,16 +41,16 @@ export class ListaTarefasComponent implements OnInit {
 
   constructor(
     private service: TarefaService,
-    private router: Router,
     private fomBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): Tarefa[] {
-    this.service.listar(this.categoria).subscribe((listaTarefas) => {
-      this.listaTarefas = listaTarefas;
-      this.tarefasFiltradas = listaTarefas;
+  ngOnInit(): void {
+    this.service.listar();
+
+    this.tarefaSubscription = this.service.tarefas$.subscribe((tarefas) => {
+      this.listaTarefas = tarefas;
+      this.tarefasFiltradas = tarefas;
     });
-    return this.tarefasFiltradas;
   }
 
   filtrarTarefasPorDescricao(descricao: string){
@@ -77,22 +78,24 @@ export class ListaTarefasComponent implements OnInit {
   }
 
   editarTarefa() {
-    this.service.editar(this.formulario.value).subscribe({
-      complete: () => this.atualizarComponente(),
-    });
+    if(this.formulario.valid){
+      const tarefaEditada = this.formulario.value;
+      this.service.editar(tarefaEditada, true);
+      this.resetarFormulario();
+    }
   }
 
   criarTarefa() {
-    this.service.criar(this.formulario.value).subscribe({
-      complete: () => this.atualizarComponente(),
-    });
+    if(this.formulario.valid){
+      const novaTarefa = this.formulario.value;
+      this.service.criar(novaTarefa);
+      this.resetarFormulario();
+    }
   }
 
-  excluirTarefa(id: number) {
-    if (id) {
-      this.service.excluir(id).subscribe({
-        complete: () => this.recarregarComponente(),
-      });
+  excluirTarefa(tarefa: Tarefa) {
+    if(tarefa.id){
+      this.service.excluir(tarefa.id);
     }
   }
 
@@ -110,15 +113,6 @@ export class ListaTarefasComponent implements OnInit {
     });
   }
 
-  recarregarComponente() {
-    this.router.navigate(['/listaTarefas']);
-  }
-
-  atualizarComponente() {
-    this.recarregarComponente();
-    this.resetarFormulario();
-  }
-
   carregarParaEditar(id: number) {
     this.service.buscarPorId(id!).subscribe((tarefa) => {
       this.formulario = this.fomBuilder.group({
@@ -132,19 +126,15 @@ export class ListaTarefasComponent implements OnInit {
     this.formAberto = true;
   }
 
-  finalizarTarefa(id: number) {
-    this.id = id
-    this.service.buscarPorId(id!).subscribe((tarefa) => {
-      this.service.atualizarStatusTarefa(tarefa).subscribe(() => {
-        this.listarAposCheck();
-      });
-    });
-  }
+  finalizarTarefa(tarefa: Tarefa) {
+    this.id = tarefa.id;
+    this.service.atualizarStatusTarefa(tarefa);
 
-  listarAposCheck() {
-    this.service.listar(this.categoria).subscribe((listaTarefas) => {
-      this.tarefasFiltradas = listaTarefas;
-    });
+    // if(tarefa.statusFinalizado == true) {
+    //   this.estadoBotao = 'checked'
+    // } else {
+    //   this.estadoBotao = 'unchecked'
+    // }
   }
 
   habilitarBotao(): string {
@@ -166,5 +156,5 @@ export class ListaTarefasComponent implements OnInit {
     }
   }
 
-  
+
 }
