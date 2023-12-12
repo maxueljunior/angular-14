@@ -1,15 +1,15 @@
-const PROXY_CONFIG = [
-  {
-    context: [
-      '/'
-    ],
-    target: "http://localhost:8080",
-    secure: false,
-    changeOrigin: true,
-    pathRewrite: {
-      "^/":""
-    }
-  }
-]
+// const PROXY_CONFIG = [
+//   {
+//     context: [
+//       '/'
+//     ],
+//     target: "http://localhost:8080",
+//     secure: false,
+//     changeOrigin: true,
+//     pathRewrite: {
+//       "^/":""
+//     }
+//   }
+// ]
 
-module.exports = PROXY_CONFIG;
+// module.exports = PROXY_CONFIG;

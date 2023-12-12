@@ -16,7 +16,7 @@
   <div class="resultados" *ngIf="livroEncontrados$ | async">
     {{ livrosResultado.totalItems }} resultados encontrados
   </div>
-<div class="container-card" *ngIf="livroEncontrados$ | async as listaLivros, else telaInicial">
+<div @searchBooksAnimate class="container-card" *ngIf="livroEncontrados$ | async as listaLivros, else telaInicial">
   <div *ngFor="let livro of listaLivros">
     <app-livro [livro]="livro"></app-livro>
   </div>

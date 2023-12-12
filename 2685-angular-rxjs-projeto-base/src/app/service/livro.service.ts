@@ -8,8 +8,8 @@ import { Item, LivrosResultado } from '../models/interfaces';
 })
 export class LivroService {
 
-  // private readonly API = 'https://www.googleapis.com/books/v1/volumes';
-  private readonly API = '/login';
+  private readonly API = 'https://www.googleapis.com/books/v1/volumes';
+  // private readonly API = '/login';
 
   constructor(private http: HttpClient) { }
 
@@ -17,11 +17,11 @@ export class LivroService {
     const params = new HttpParams()
       .append('q', valorDigitado);
 
-    // return this.http.get<LivrosResultado>(this.API, {params});
-    return this.http.post<LivrosResultado>(this.API, {
-      username: "rodrigo",
-      password: "123"
-    });
+    return this.http.get<LivrosResultado>(this.API, {params});
+    // return this.http.post<LivrosResultado>(this.API, {
+    //   username: "rodrigo",
+    //   password: "123"
+    // });
     // .pipe(
     //   map(resultado => resultado.items ?? []),
     // );

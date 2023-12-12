@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription, switchMap, map, filter, debounceTime, tap, distinctUntilChanged, catchError, throwError, of } from 'rxjs';
+import { searchBooksTrigger } from 'src/app/animations';
 import { Item, Livro, LivrosResultado } from 'src/app/models/interfaces';
 import { LivroVolumeInfo } from 'src/app/models/livroVolumeInfo';
 import { LivroService } from 'src/app/service/livro.service';
@@ -10,7 +11,10 @@ const PAUSA = 300;
 @Component({
   selector: 'app-lista-livros',
   templateUrl: './lista-livros.component.html',
-  styleUrls: ['./lista-livros.component.css']
+  styleUrls: ['./lista-livros.component.css'],
+  animations: [
+    searchBooksTrigger
+  ]
 })
 export class ListaLivrosComponent{
 
