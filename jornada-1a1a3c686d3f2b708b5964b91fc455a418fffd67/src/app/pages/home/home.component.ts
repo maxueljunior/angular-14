@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DepoimentoService } from 'src/app/core/services/depoimento.service';
 import { PromocaoService } from 'src/app/core/services/promocao.service';
-import { Promocao } from 'src/app/core/types/type';
+import { Depoimento, Promocao } from 'src/app/core/types/type';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +11,12 @@ import { Promocao } from 'src/app/core/types/type';
 export class HomeComponent implements OnInit{
 
   listaPromocoes!: Promocao[];
+  listaDepoimentos!: Depoimento[];
 
-  constructor(private servicePromocao: PromocaoService){
+  constructor(
+    private servicePromocao: PromocaoService,
+    private depoimentoService: DepoimentoService
+    ){
 
   }
 
@@ -19,5 +24,8 @@ export class HomeComponent implements OnInit{
     this.servicePromocao.listar().subscribe(
       (promocoes) => this.listaPromocoes = promocoes
     );
+    this.depoimentoService.listar().subscribe(
+      (depoimentos) => this.listaDepoimentos = depoimentos
+    )
   }
 }
