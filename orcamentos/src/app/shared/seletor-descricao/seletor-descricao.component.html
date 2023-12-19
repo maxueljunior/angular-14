@@ -1,0 +1,4 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ label }}</mat-label>
+  <input matInput placeholder="{{ placeholder }}" #descricao (blur)="guardaComentario(descricao.value)" [value]="comentario">
+</mat-form-field>

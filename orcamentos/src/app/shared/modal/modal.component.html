@@ -1,0 +1,10 @@
+<div class="container">
+  <h3>Selecione um material</h3>
+  <mat-button-toggle-group name="material" aria-label="material" [formControl]="formProdutoService.obterControl('material')">
+    <mat-button-toggle value="X22">X22</mat-button-toggle>
+    <mat-button-toggle value="1020">1020</mat-button-toggle>
+    <mat-button-toggle value="1040CVR">1040CVR</mat-button-toggle>
+  </mat-button-toggle-group>
+  <hr/>
+  <app-seletor-descricao [formControl]="formProdutoService.obterControl('comentario')" placeholder="Digite um comentario" label="Comentario"></app-seletor-descricao>
+</div>

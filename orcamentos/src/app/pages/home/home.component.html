@@ -1,0 +1,14 @@
+<form [formGroup]="formProdutoService.formProduto" (ngSubmit)="formProdutoService.clicou()">
+  <mat-chip-listbox aria-label="Fish selection">
+    <mat-chip-option color="warn" (click)="formProdutoService.openDialog()">Escolher Material</mat-chip-option>
+  </mat-chip-listbox>
+  <mat-form-field appearance="outline">
+    <mat-label>Codigo</mat-label>
+    <input matInput formControlName="codigo">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Descrição</mat-label>
+    <input matInput formControlName="descricao">
+  </mat-form-field>
+  <button mat-flat-button color="primary">Buscar</button>
+</form>
