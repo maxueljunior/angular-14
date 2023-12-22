@@ -39,6 +39,7 @@ import { FormBaseComponent } from './shared/form-base/form-base.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { CadastroComponent } from './pages/cadastro/cadastro.component';
     DepoimentosComponent,
     LoginComponent,
     FormBaseComponent,
-    CadastroComponent
+    CadastroComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

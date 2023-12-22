@@ -13,8 +13,14 @@ export class FormBaseComponent implements OnInit{
   cadastroForm!: FormGroup;
   estadoControl = new FormControl<UnidadeFederativa | null>(null, Validators.required);
 
+  @Input() titulo: string = 'Crie sua conta';
+  @Input() textoBotao: string = 'CADASTRAR';
+
   @Input() perfilComponent!: boolean;
   @Output() acaoClique: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() sair: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormularioService
@@ -36,6 +42,10 @@ export class FormBaseComponent implements OnInit{
       // aceitarTermos: [null, [Validators.requiredTrue]]
     });
 
+    if(this.perfilComponent){
+
+    }
+
     this.formService.setCadastro(this.cadastroForm);
   }
 
@@ -46,5 +56,9 @@ export class FormBaseComponent implements OnInit{
 
   executarAcao(): void{
     this.acaoClique.emit('algum valor');
+  }
+
+  deslogar(): void{
+    this.sair.emit();
   }
 }
