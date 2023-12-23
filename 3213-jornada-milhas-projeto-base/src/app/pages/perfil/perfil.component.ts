@@ -34,7 +34,7 @@ export class PerfilComponent implements OnInit{
 
   ngOnInit(): void {
     this.token = this.tokenService.retornarToken();
-    this.cadastroService.buscar(this.token).subscribe((cadastro) => {
+    this.cadastroService.buscar().subscribe((cadastro) => {
       this.cadastro = cadastro;
       this.nome = this.cadastro.nome;
       this.carregarFormulario();
@@ -74,7 +74,7 @@ export class PerfilComponent implements OnInit{
       estado: this.form?.value.estado
     }
 
-    this.cadastroService.editar(this.token, dadosAtualizados).subscribe({
+    this.cadastroService.editar(dadosAtualizados).subscribe({
       next: () => {
         alert('Cadastro editado com sucesso')
         this.router.navigate(['/'])

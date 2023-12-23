@@ -19,17 +19,11 @@ export class CadastroService {
     return this.http.post<Cadastro>(`${this.urlApi}/auth/cadastro`, usuario);
   }
 
-  public buscar(token: string): Observable<Cadastro>{
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    })
-    return this.http.get<Cadastro>(`${this.urlApi}/auth/perfil`, {headers});
+  public buscar(): Observable<Cadastro>{
+    return this.http.get<Cadastro>(`${this.urlApi}/auth/perfil`);
   }
 
-  public editar(token: string, usuario: Cadastro): Observable<Cadastro>{
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    })
-    return this.http.patch<Cadastro>(`${this.urlApi}/auth/perfil`, usuario, {headers});
+  public editar(usuario: Cadastro): Observable<Cadastro>{
+    return this.http.patch<Cadastro>(`${this.urlApi}/auth/perfil`, usuario);
   }
 }
