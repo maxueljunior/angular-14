@@ -8,7 +8,7 @@ import { UnidadeFederativa } from '../types/type';
   providedIn: 'root'
 })
 export class UnidadeFederativaService {
-  private apiUrl: string = environment.apiUrl
+  private apiUrl: string = environment.apiUrl;
   private cache$?: Observable<UnidadeFederativa[]>;
 
   constructor(
@@ -16,7 +16,7 @@ export class UnidadeFederativaService {
   ) { 
   }
 
-  listar() : Observable<UnidadeFederativa[]> {
+  listar(): Observable<UnidadeFederativa[]> {
     if (!this.cache$) {
       this.cache$ = this.requestEstados().pipe(
         shareReplay(1)
@@ -27,6 +27,6 @@ export class UnidadeFederativaService {
   }
 
   private requestEstados(): Observable<UnidadeFederativa[]> {
-    return this.http.get<UnidadeFederativa[]>(`${this.apiUrl}/estados`);
+    return this.http.get<UnidadeFederativa[]>(`${this.apiUrl}/estad`);
   }
 }

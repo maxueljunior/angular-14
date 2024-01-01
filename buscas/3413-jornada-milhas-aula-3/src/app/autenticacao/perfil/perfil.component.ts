@@ -18,8 +18,8 @@ export class PerfilComponent implements OnInit{
   perfilComponent = true;
 
   cadastro!: PessoaUsuaria;
-  token: string = '';
-  nome: string = '';
+  token = '';
+  nome = '';
   form!: FormGroup<any> | null;
 
   constructor(
@@ -36,7 +36,7 @@ export class PerfilComponent implements OnInit{
       this.cadastro = cadastro;
       this.nome = cadastro.nome;
       this.carregarFormulario();
-    })
+    });
   }
 
   carregarFormulario() {
@@ -65,17 +65,17 @@ export class PerfilComponent implements OnInit{
       genero: this.form?.value.genero,
       cidade: this.form?.value.cidade,
       estado: this.form?.value.estado
-    }
+    };
 
     this.cadastroService.editarCadastro(dadosAtualizados).subscribe({
       next: () => {
-        alert('Cadastro editado com sucesso')
+        alert('Cadastro editado com sucesso');
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.log(err)
+        console.log(err);
       }
-    })
+    });
   }
 
   deslogar() {
